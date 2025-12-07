@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Academy | Learn Java Programming</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="#">
+</head>
+<body>    
+    
+    <!--Header-->
+   <!--Header-->
+<header>
+    <h1>JS Academy</h1>
+    <img src="image/logo.png" alt="JS Academy Logo" width="100">
+    
+    <!-- أزرار الترجمة والوضع الداكن -->
+    <div class="header-buttons">
+        <button class="header-btn language-btn" id="languageToggle" aria-label="Toggle language">
+            <i class="fas fa-language"></i>
+        </button>
+        <button class="header-btn theme-btn" id="themeToggle" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+</header>
+
+    <!--NAV-->
+    <nav>
+        <a href="index.html" class="nav-link" data-translate="nav.home">Home</a>
+        <a href="lessons.html" class="nav-link" data-translate="nav.lessons">Lessons</a>
+        <a href="example.html" class="nav-link" data-translate="nav.examples">Examples</a>
+        <a href="quiz.html" class="nav-link" data-translate="nav.quiz">Quiz</a>
+        <a href="#about" class="nav-link" id="about-link" data-translate="nav.about">About</a>
+        <a href="#contact" class="nav-link" id="contact-link" data-translate="nav.contact">Contact Us</a>
+    </nav>
+
+    <!--Section Hero-->
+    <section class="hero">
+        <div class="hero-text">
+            <h1 data-translate="index.heroTitle">Welcome to JS Academy</h1>
+            <p data-translate="index.heroText">
+                Learn JavaScript easily with lessons, examples, quizzes, and projects.
+                Start your programming journey now!
+            </p>
+            <button class="hero-btn" data-translate="btn.startLearning">Start Learning</button>
+        </div>
+
+        <img src="image/coding.png" alt="JS Coding Image">
+    </section>
+
+    <!--Main Content-->
+    <main>
+        <section>
+
+            <!--Vision & Mission -->
+            <div class="box">
+            <h2 data-translate="index.visionTitle">Vision & Mission</h2>
+            <p data-translate="index.visionText">
+                Our vision is to create a modern, simple, and effective environment 
+                for learning JavaScript for beginners.  
+                Our mission is to provide free, high-quality lessons and examples 
+                that help students build real programming skills.
+            </p>
+            </div>
+
+            <!--About Developer-->
+            <div class="box" id="about">
+            <h2 data-translate="index.aboutTitle">About Developer</h2>
+            <p data-translate="index.aboutText">
+                The JS Academy platform was developed by Seif, a passionate web developer 
+                who aims to make learning JavaScript easy and enjoyable for everyone.
+            </p>
+            </div>
+
+            <!--Contact-->
+            <div class="box" id="contact">
+            <h2 data-translate="index.contactTitle">Contact Us</h2>
+            <p data-translate="index.contactEmail">Email: seif@gmail.com</p>
+            </div>
+
+        </section>
+    </main>
+
+    <!--Footer-->
+    <footer>
+        <p data-translate="footer.copyright">© 2026 JS Academy. All rights reserved.</p>
+    </footer>
+
+    <!--javascript-->
+    <script src="js/script.js"></script>
+    <script src="js/translations.js"></script>
+    <script>
+        //  index.html
+        document.addEventListener('DOMContentLoaded', function() {
+            const aboutLink = document.getElementById('about-link');
+            const contactLink = document.getElementById('contact-link');
+            
+            if (aboutLink) {
+                aboutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const aboutSection = document.getElementById('about');
+                    if (aboutSection) {
+                        aboutSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        updateActiveNav('about');
+                    }
+                });
+            }
+            
+            if (contactLink) {
+                contactLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const contactSection = document.getElementById('contact');
+                    if (contactSection) {
+                        contactSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        updateActiveNav('contact');
+                    }
+                });
+            }
+            
+            
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('section, .box');
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (window.scrollY >= (sectionTop - 100)) {
+                        current = section.getAttribute('id') || '';
+                    }
+                });
+                
+                
+                if (window.location.pathname.endsWith('index.html') || 
+                    window.location.pathname === '/' || 
+                    window.location.pathname.endsWith('/')) {
+                    
+                    
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    
+                    
+                    if (current === 'about' || current === 'contact') {
+                        const link = document.querySelector(`#${current}-link`);
+                        if (link) link.classList.add('active');
+                    } else if (window.scrollY < 100) {
+                        document.querySelector('.nav-link[href="index.html"]').classList.add('active');
+                    }
+                }
+            });
+            
+            function updateActiveNav(target) {
+                
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                
+                const activeLink = document.querySelector(`#${target}-link`);
+                if (activeLink) activeLink.classList.add('active');
+            }
+            
+            // Handle hero button click
+            document.querySelector('.hero-btn').addEventListener('click', function() {
+                window.location.href = 'lessons.html';
+            });
+            
+            // Listen for theme changes to update specific elements
+            document.addEventListener('themeChanged', function(event) {
+                const theme = event.detail.theme;
+                console.log('Theme changed to:', theme);
+                
+                // يمكنك إضافة منطق إضافي هنا إذا لزم الأمر
+            });
+            
+            // Listen for language changes
+            document.addEventListener('languageChanged', function(event) {
+                const lang = event.detail.language;
+                console.log('Language changed to:', lang);
+                
+                // تحديث النص على الأزرار إذا لزم الأمر
+            });
+        });
+    </script>
+</body>
+</html>

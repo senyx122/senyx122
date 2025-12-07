@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Lessons - JS Academy</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        
+        .lessons-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .course-header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .course-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shine 8s infinite linear;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .course-header h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            animation: titleGlow 3s infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 5px rgba(255,255,255,0.5); }
+            100% { text-shadow: 0 0 15px rgba(255,255,255,0.8), 0 0 25px rgba(255,255,255,0.4); }
+        }
+        
+        .course-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .back-to-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            z-index: 2;
+            overflow: hidden;
+        }
+        
+        .back-to-home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .back-to-home:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .back-to-home:hover::before {
+            left: 100%;
+        }
+        
+        .progress-summary {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .progress-item {
+            text-align: center;
+            position: relative;
+            padding: 10px;
+        }
+        
+        .progress-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: #2ecc71;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-item:hover::after {
+            width: 80%;
+        }
+        
+        .progress-item .value {
+            font-size: 2rem;
+            font-weight: 700;
+            transition: transform 0.3s ease;
+        }
+        
+        .progress-item:hover .value {
+            transform: scale(1.1);
+        }
+        
+        .progress-item .label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .progress-item:hover .label {
+            opacity: 1;
+        }
+        
+        .lessons-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .lesson-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            position: relative;
+        }
+        
+        .lesson-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        
+        .lesson-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .lesson-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .lesson-number {
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lesson-number::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            transition: transform 0.8s ease;
+        }
+        
+        .lesson-card:hover .lesson-number::after {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
+        }
+        
+        .lesson-number .badge {
+            background: #2ecc71;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            transition: transform 0.5s ease;
+        }
+        
+        .lesson-card:hover .video-container iframe {
+            transform: scale(1.02);
+        }
+        
+        .lesson-content {
+            padding: 20px;
+        }
+        
+        .lesson-content h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .lesson-duration {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+            padding: 3px 10px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .lesson-card:hover .lesson-duration {
+            background: #3498db;
+            color: white;
+        }
+        
+        .lesson-content p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        
+        .lesson-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .lesson-tags {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background: #f1f8ff;
+            color: #0366d6;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(3, 102, 214, 0.2);
+        }
+        
+        .lesson-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .action-btn:hover::before {
+            left: 100%;
+        }
+        
+        .action-btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(41, 128, 185, 0.4);
+        }
+        
+        .action-btn.completed {
+            background: #2ecc71;
+        }
+        
+        .action-btn.completed:hover {
+            background: #27ae60;
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+        }
+        
+        .action-btn.save {
+            background: #f39c12;
+        }
+        
+        .action-btn.save:hover {
+            background: #d68910;
+            box-shadow: 0 5px 15px rgba(214, 137, 16, 0.4);
+        }
+        
+        .lesson-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .lesson-progress {
+            flex: 1;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #2ecc71;
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .progress-text {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+            transition: color 0.3s ease;
+        }
+        
+        .lesson-card:hover .progress-text {
+            color: #3498db;
+        }
+        
+        .search-filter {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #3498db;
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            box-shadow: 0 4px 20px rgba(52, 152, 219, 0.3);
+            border-color: #2980b9;
+        }
+        
+        .search-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #3498db;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus + i {
+            color: #2980b9;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .filter-select {
+            padding: 15px 20px;
+            border: 2px solid #3498db;
+            border-radius: 30px;
+            font-size: 1rem;
+            background: white;
+            min-width: 200px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-select:focus {
+            box-shadow: 0 4px 20px rgba(52, 152, 219, 0.3);
+            border-color: #2980b9;
+            outline: none;
+        }
+        
+        .course-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .course-nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12);
+            background-size: 300% 100%;
+            animation: gradientSlide 3s infinite alternate;
+        }
+        
+        @keyframes gradientSlide {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        .nav-btn {
+            padding: 12px 30px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(41, 128, 185, 0.3);
+        }
+        
+        .nav-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .nav-btn:disabled:hover::before {
+            left: -100%;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            color: #bdc3c7;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .empty-state h3 {
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+        
+        .playlist-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #e74c3c;
+            animation: borderPulse 2s infinite;
+        }
+        
+        @keyframes borderPulse {
+            0%, 100% { border-color: #e74c3c; }
+            50% { border-color: #ff7675; }
+        }
+        
+        .playlist-info i {
+            color: #e74c3c;
+            font-size: 2rem;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .playlist-info-text h4 {
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .playlist-info-text p {
+            color: #7f8c8d;
+            margin-bottom: 0;
+        }
+        
+        /* Floating particles effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(52, 152, 219, 0.2);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Loading animation for cards */
+        .lesson-card.loading {
+            animation: cardLoading 1.5s infinite;
+        }
+        
+        @keyframes cardLoading {
+            0% { opacity: 0.7; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(-5px); }
+            100% { opacity: 0.7; transform: translateY(0); }
+        }
+        
+        /* Achievement animation */
+        .achievement-badge {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(135deg, #f39c12, #e74c3c);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            text-align: center;
+            animation: achievementPopup 0.5s forwards;
+        }
+        
+        @keyframes achievementPopup {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            70% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+        
+        @media (max-width: 768px) {
+            .lessons-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-filter {
+                flex-direction: column;
+            }
+            
+            .search-box, .filter-select {
+                min-width: 100%;
+            }
+            
+            .course-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .progress-summary {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .back-to-home {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 20px;
+                width: fit-content;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+</head>
+<body>    
+    
+
+    <header>
+        <h1>JS Academy</h1>
+        <img src="image/logo.png" alt="JS Academy Logo" width="100">
+    </header>
+
+
+    <main>
+        <div class="lessons-container">
+            <div class="course-header">
+                <a href="index.html" class="back-to-home">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+                
+                <h2>JavaScript Beginner's Course</h2>
+                <p>Learn JavaScript from scratch with 11 complete tutorial videos. Start your programming journey now!</p>
+                
+                <div class="progress-summary">
+                    <div class="progress-item">
+                        <div class="value" id="completed-lessons">0</div>
+                        <div class="label">Completed</div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="value" id="total-lessons">11</div>
+                        <div class="label">Total Lessons</div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="value" id="total-duration">3:30</div>
+                        <div class="label">Learning Hours</div>
+                    </div>
+                    <div class="progress-item">
+                        <div class="value" id="progress-percent">0%</div>
+                        <div class="label">Progress</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="playlist-info">
+                <i class="fab fa-youtube"></i>
+                <div class="playlist-info-text">
+                    <h4>Complete JavaScript Playlist</h4>
+                    <p>All 11 videos from your YouTube playlist are embedded here. Click "Watch on YouTube" to open the full playlist.</p>
+                </div>
+            </div>
+            
+            <div class="search-filter">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Search lessons...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <select class="filter-select" id="filter-select">
+                    <option value="all">All Lessons</option>
+                    <option value="completed">Completed</option>
+                    <option value="incomplete">Not Completed</option>
+                </select>
+            </div>
+            
+            <div class="lessons-list" id="lessons-list">
+                <!-- Lessons will be populated by JavaScript -->
+            </div>
+            
+            <div class="course-nav">
+                <button class="nav-btn" id="prev-lesson-btn" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous Lesson
+                </button>
+                <div class="course-info">
+                    <span id="current-lesson-info">Lesson 1 of 11</span>
+                </div>
+                <button class="nav-btn" id="next-lesson-btn">
+                    Next Lesson <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="https://www.youtube.com/playlist?list=PL8q8h6vqfkSXcfaCL_nqsbLkDnodHpBG8" 
+                   target="_blank" 
+                   class="nav-btn" 
+                   style="background: #e74c3c; display: inline-flex; text-decoration: none;">
+                    <i class="fab fa-youtube"></i> Watch Full Playlist on YouTube
+                </a>
+                
+                <a href="index.html" class="nav-btn" style="background: #2c3e50; margin-left: 10px; text-decoration: none;">
+                    <i class="fas fa-home"></i> Go to Homepage
+                </a>
+            </div>
+        </div>
+    </main>
+
+
+    <footer>
+        <p>© 2026 JS Academy. All rights reserved.</p>
+    </footer>
+
+
+    <script src="js/script.js"></script>
+    <script src="js/translations.js"></script>
+    <script>
+
+        const lessonsData = [
+            {
+                id: 1,
+                title: "  كورس جافاسكريبت JavaScript/Node.js (Arabic) - #0 Intro  ",
+                youtubeId: "2EAV2cB3FWY",
+                description: "الفيديو ده مقدمة لسلسة شرح أساسيات الجافاسكريبت بالعربي من على موقع FreeCodeCamp.",
+                duration: "2:56",
+                level: "beginner",
+                tags: ["Introduction", "Basics", "Setup"],
+                completed: false,
+                progress: 0
+            },
+            {
+                id: 2,
+                title: " كورس جافاسكريبت JavaScript/Node.js (Arabic) - #1 Variables  ",
+                youtubeId: "ClkIRKlmplY",
+                description: "الفيديو ده بيشرح الVariables وبيفصل المقارنة مبين الvar والlet والconst.",
+                duration: "33:54",
+                level: "beginner",
+                tags: ["Variables", "Data Types", "Strings", "Numbers"],
+                completed: false,
+                progress: 0
+            },
+            {
+                id: 3,
+                title: " كورس جافاسكريبت JavaScript/Node.js (Arabic) - #2 Arithmetic Operators ",
+                youtubeId: "XUreKLul1og",
+                description: " تعالوا نتعرف على العمليات الحسابية وازاي ينعملها في البرمجة.  ",
+                duration: "14:48",
+                level: "beginner",
+                tags: ["Operators", "Arithmetic", "Math", "Calculations"],
+                completed: false,
+                progress: 0
+            },
+            {
+                id: 4,
+                title: " كورس جافاسكريبت JavaScript/Node.js (Arabic) - #3 Strings ",
+                youtubeId: "Sr04cTu5abY",
+                description: "الفيديو ده مهم جدا في تغطية النصوص والتعامل معاها في الكود.",
+                duration: "35:00",
+                level: "beginner",
+                tags: ["Strings", "Text", "Methods", "Manipulation"],
+                completed: false,
+                progress: 0
+            },
+            {
+                id: 5,
+                title: " كورس جافاسكريبت JavaScript/Node.js (Arabic) - #4 Arrays ",
+                youtubeId: "R16IMAWDGyg",
+                description: "الفيديو ده مهم جدا في تغطية واحد من اهم الData Structures اللي هنستخدمها في التعامل العملي مع اي بيانات.",
+                duration: "24:21",
+                level: "beginner",
+                tags: ["Arrays", "Data Structures", "Lists", "Methods"],
+                completed: false,
+                progress: 0
+            },
+            {
+                id: 6,
+                title: " كورس جافاسكريبت JavaScript/Node.js (Arabic) - #5 Functions ",
+                youtubeId: "XhM9px0OFkc",
+                description: "الفيديو ده مهم جدا في تغطية واحد من اهم الData Structures اللي هنستخدمها في التعامل العملي مع اي بيانا",
+                duration: "33:46",
+                level: "beginner",
+                tags: ["Functions", "Methods", "Parameters", "Return"],
+                completed: false,
+                progress: 0
+            },
+            {
+                id: 7,
+                title: " كورس جافاسكريبت JavaScript/Node.js (Arabic) - #6 Conditions ",
+                youtubeId: "GgqCm46vAL8",
+                description: "تعالوا نتعرف على الConditions وهو انك تعمل مسارات في الكود بناء على تحقق شروط معينة.",
+                duration: "40:48",
+                level: "beginner",
+                tags: ["Conditions", "If-Else", "Logic", "Comparison"],
+                completed: false,
+                progress: 0
+            },
+            {
+                id: 8,
+                title: " كورس جافاسكريبت JavaScript/Node.js (Arabic) - #7 Switch Case ",
+                youtubeId: "B-X4hrHtJ58",
+                description: " كورس جافاسكريبت JavaScript/Node.js (Arabic) - #7 Switch Case ",
+                duration: "20:00",
+                level: "beginner",
+                tags: ["Switch", "Case", "Conditions", "Control Flow"],
+                completed: false,
+                progress: 0
+            },
+            {
+                id: 9,
+                title: " كورس جافاسكريبت JavaScript/Node.js (Arabic) - #8 Objects ",
+                youtubeId: "ZzEg_BSVN0A",
+                description: " كورس جافاسكريبت JavaScript/Node.js (Arabic) - #8 Objects ",
+                duration: "34:49",
+                level: "beginner",
+                tags: ["Objects", "OOP", "Properties", "Methods"],
+                completed: false,
+                progress: 0
+            },
+            {
+                id: 10,
+                title: " كورس جافاسكريبت JavaScript/Node.js (Arabic) - #9 Loops ",
+                youtubeId: "lRsvuBB8n80",
+                description: " كورس جافاسكريبت JavaScript/Node.js (Arabic) - #9 Loops ",
+                duration: "31:05",
+                level: "beginner",
+                tags: ["Loops", "For", "While", "Iteration"],
+                completed: false,
+                progress: 0
+            },
+            {
+                id: 11,
+                title: " كورس جافاسكريبت JavaScript/Node.js (Arabic) - #10 Outro النهاية ",
+                youtubeId: "SS-HnTEHkss",
+                description: "Build a complete mini project using all the concepts learned in the JavaScript tutorial series.",
+                duration: "2:59",
+                level: "beginner",
+                tags: ["Conclusion", "Summary", "Review", "Next Steps"],
+                completed: false,
+                progress: 0
+            }
+        ];
+
+        
+        let currentLesson = 1;
+        let completedLessons = 0;
+        let filteredLessons = [...lessonsData];
+
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            createParticles();
+            
+            
+            const lessonsList = document.getElementById('lessons-list');
+            lessonsList.innerHTML = '<div class="lesson-card loading"></div><div class="lesson-card loading"></div><div class="lesson-card loading"></div>';
+            
+            
+            setTimeout(() => {
+                loadLessons();
+                updateCourseProgress();
+                updateNavigation();
+                
+               
+                loadSavedProgress();
+                
+                
+                document.getElementById('search-input').addEventListener('input', function() {
+                    filterLessons();
+                });
+                
+               
+                document.getElementById('filter-select').addEventListener('change', function() {
+                    filterLessons();
+                });
+                
+                
+                document.getElementById('prev-lesson-btn').addEventListener('click', function() {
+                    if (currentLesson > 1) {
+                        currentLesson--;
+                        loadLessons();
+                        updateNavigation();
+                        scrollToLesson(currentLesson);
+                    }
+                });
+                
+                document.getElementById('next-lesson-btn').addEventListener('click', function() {
+                    if (currentLesson < lessonsData.length) {
+                        currentLesson++;
+                        loadLessons();
+                        updateNavigation();
+                        scrollToLesson(currentLesson);
+                    }
+                });
+            }, 800);
+        });
+
+       
+        function createParticles() {
+            const particlesContainer = document.createElement('div');
+            particlesContainer.className = 'particles';
+            
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random position and animation delay
+                const left = Math.random() * 100;
+                const delay = Math.random() * 20;
+                const size = Math.random() * 3 + 1;
+                
+                particle.style.left = `${left}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.background = `rgba(${Math.random() * 100 + 52}, ${Math.random() * 100 + 152}, ${Math.random() * 100 + 219}, ${Math.random() * 0.3 + 0.1})`;
+                
+                particlesContainer.appendChild(particle);
+            }
+            
+            document.body.appendChild(particlesContainer);
+        }
+
+        // Load and display lessons
+        function loadLessons() {
+            const lessonsList = document.getElementById('lessons-list');
+            lessonsList.innerHTML = '';
+            
+            if (filteredLessons.length === 0) {
+                lessonsList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <h3>No lessons match your search</h3>
+                        <p>Try changing your search terms or remove the filter</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            
+            filteredLessons.forEach((lesson, index) => {
+                setTimeout(() => {
+                    const lessonCard = createLessonCard(lesson);
+                    lessonCard.style.opacity = '0';
+                    lessonCard.style.transform = 'translateY(20px)';
+                    lessonsList.appendChild(lessonCard);
+                    
+                    
+                    setTimeout(() => {
+                        lessonCard.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                        lessonCard.style.opacity = '1';
+                        lessonCard.style.transform = 'translateY(0)';
+                    }, 50);
+                }, index * 100);
+            });
+        }
+
+        
+        function createLessonCard(lesson) {
+            const card = document.createElement('div');
+            card.className = 'lesson-card';
+            card.id = `lesson-${lesson.id}`;
+            
+            
+            const tagsHTML = lesson.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+            
+            
+            const completedClass = lesson.completed ? 'completed' : '';
+            const completedText = lesson.completed ? 'Completed' : 'Start Now';
+            const completedIcon = lesson.completed ? 'check-circle' : 'play-circle';
+            
+            
+            const youtubeUrl = `https://www.youtube.com/embed/${lesson.youtubeId}?list=PL8q8h6vqfkSXcfaCL_nqsbLkDnodHpBG8`;
+            
+            card.innerHTML = `
+                <div class="lesson-number" style="background: #3498db">
+                    <span>Lesson ${lesson.id}</span>
+                    <span class="badge">Beginner</span>
+                </div>
+                <div class="video-container">
+                    <iframe src="${youtubeUrl}" 
+                            title="${lesson.title}"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="lesson-content">
+                    <h3>
+                        ${lesson.title}
+                        <span class="lesson-duration">${lesson.duration}</span>
+                    </h3>
+                    <p>${lesson.description}</p>
+                    <div class="lesson-tags">
+                        ${tagsHTML}
+                    </div>
+                    <div class="lesson-meta">
+                        <div class="lesson-actions">
+                            <button class="action-btn ${completedClass} start-lesson-btn" data-id="${lesson.id}">
+                                <i class="fas fa-${completedIcon}"></i> ${completedText}
+                            </button>
+                            <button class="action-btn save save-lesson-btn" data-id="${lesson.id}">
+                                <i class="fas fa-bookmark"></i> Save
+                            </button>
+                            <a href="https://www.youtube.com/watch?v=${lesson.youtubeId}&list=PL8q8h6vqfkSXcfaCL_nqsbLkDnodHpBG8" 
+                               target="_blank" 
+                               class="action-btn" 
+                               style="background: #e74c3c; text-decoration: none;">
+                                <i class="fab fa-youtube"></i> YouTube
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="lesson-footer">
+                    <div class="lesson-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${lesson.progress}%"></div>
+                        </div>
+                        <div class="progress-text">${lesson.progress}% Completed</div>
+                    </div>
+                    <div class="lesson-views">
+                        <i class="fas fa-play-circle"></i> Part ${lesson.id}
+                    </div>
+                </div>
+            `;
+            
+            // Add event listeners
+            const startBtn = card.querySelector('.start-lesson-btn');
+            const saveBtn = card.querySelector('.save-lesson-btn');
+            
+            startBtn.addEventListener('click', function() {
+                const lessonId = parseInt(this.getAttribute('data-id'));
+                toggleLessonCompletion(lessonId);
+            });
+            
+            saveBtn.addEventListener('click', function() {
+                const lessonId = parseInt(this.getAttribute('data-id'));
+                saveLesson(lessonId);
+            });
+            
+            return card;
+        }
+
+        
+        function toggleLessonCompletion(lessonId) {
+            const lesson = lessonsData.find(l => l.id === lessonId);
+            if (lesson) {
+                lesson.completed = !lesson.completed;
+                lesson.progress = lesson.completed ? 100 : 0;
+                
+                
+                if (lesson.completed) {
+                    showAchievement(`Lesson ${lessonId} Completed!`);
+                }
+                
+                
+                completedLessons = lessonsData.filter(l => l.completed).length;
+                
+                
+                filterLessons();
+                updateCourseProgress();
+                
+                
+                const message = lesson.completed ? 
+                    `Congratulations! You completed Lesson ${lessonId}: ${lesson.title}` :
+                    `Lesson ${lessonId} marked as not completed`;
+                
+                showNotification(message);
+                
+               
+                saveProgress();
+            }
+        }
+
+        // Show achievement popup
+        function showAchievement(message) {
+            const achievement = document.createElement('div');
+            achievement.className = 'achievement-badge';
+            achievement.innerHTML = `
+                <i class="fas fa-trophy" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                <h3 style="margin-bottom: 5px;">Achievement Unlocked!</h3>
+                <p>${message}</p>
+            `;
+            
+            document.body.appendChild(achievement);
+            
+            
+            setTimeout(() => {
+                achievement.style.animation = 'achievementPopup 0.5s reverse forwards';
+                setTimeout(() => {
+                    document.body.removeChild(achievement);
+                }, 500);
+            }, 2000);
+        }
+
+        
+        function saveLesson(lessonId) {
+            const lesson = lessonsData.find(l => l.id === lessonId);
+            const saveBtn = document.querySelector(`.save-lesson-btn[data-id="${lessonId}"]`);
+            
+            if (saveBtn.innerHTML.includes('Saved')) {
+                saveBtn.innerHTML = '<i class="fas fa-bookmark"></i> Save';
+                saveBtn.style.background = '#f39c12';
+                showNotification(`Removed Lesson ${lessonId} from favorites`);
+            } else {
+                saveBtn.innerHTML = '<i class="fas fa-check"></i> Saved';
+                saveBtn.style.background = '#2ecc71';
+                saveBtn.style.animation = 'pulse 0.5s';
+                setTimeout(() => {
+                    saveBtn.style.animation = '';
+                }, 500);
+                showNotification(`Saved Lesson ${lessonId} to favorites`);
+            }
+            
+            // Save to localStorage
+            const savedLessons = JSON.parse(localStorage.getItem('js-academy-saved-lessons') || '[]');
+            if (savedLessons.includes(lessonId)) {
+                const index = savedLessons.indexOf(lessonId);
+                savedLessons.splice(index, 1);
+            } else {
+                savedLessons.push(lessonId);
+            }
+            localStorage.setItem('js-academy-saved-lessons', JSON.stringify(savedLessons));
+        }
+
+        // Filter lessons based on search and filter criteria
+        function filterLessons() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const filterValue = document.getElementById('filter-select').value;
+            
+            filteredLessons = lessonsData.filter(lesson => {
+                // Search
+                const matchesSearch = lesson.title.toLowerCase().includes(searchTerm) ||
+                                     lesson.description.toLowerCase().includes(searchTerm) ||
+                                     lesson.tags.some(tag => tag.toLowerCase().includes(searchTerm));
+                
+                // Filter - only completion status now since all are beginner
+                let matchesFilter = true;
+                switch(filterValue) {
+                    case 'completed':
+                        matchesFilter = lesson.completed;
+                        break;
+                    case 'incomplete':
+                        matchesFilter = !lesson.completed;
+                        break;
+                }
+                
+                return matchesSearch && matchesFilter;
+            });
+            
+            loadLessons();
+        }
+
+        // Update course progress statistics
+        function updateCourseProgress() {
+            completedLessons = lessonsData.filter(l => l.completed).length;
+            const totalLessons = lessonsData.length;
+            const progressPercent = Math.round((completedLessons / totalLessons) * 100);
+            
+            // Calculate total duration
+            const totalDuration = lessonsData.reduce((sum, lesson) => {
+                const [min, sec] = lesson.duration.split(':').map(Number);
+                return sum + min + sec/60;
+            }, 0);
+            
+            const hours = Math.floor(totalDuration / 60);
+            const minutes = Math.round(totalDuration % 60);
+            
+            document.getElementById('completed-lessons').textContent = completedLessons;
+            document.getElementById('progress-percent').textContent = `${progressPercent}%`;
+            document.getElementById('total-duration').textContent = `${hours}:${minutes.toString().padStart(2, '0')}`;
+            
+            // Animate progress value changes
+            const progressValue = document.getElementById('progress-percent');
+            progressValue.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                progressValue.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        // Update navigation buttons
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prev-lesson-btn');
+            const nextBtn = document.getElementById('next-lesson-btn');
+            const lessonInfo = document.getElementById('current-lesson-info');
+            
+            prevBtn.disabled = currentLesson === 1;
+            nextBtn.disabled = currentLesson === lessonsData.length;
+            
+            lessonInfo.textContent = `Lesson ${currentLesson} of ${lessonsData.length}`;
+            
+            // Animate lesson info change
+            lessonInfo.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                lessonInfo.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        // Scroll to specific lesson
+        function scrollToLesson(lessonId) {
+            const lessonCard = document.getElementById(`lesson-${lessonId}`);
+            if (lessonCard) {
+                lessonCard.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                
+                // Highlight effect with enhanced animation
+                lessonCard.style.boxShadow = '0 0 0 3px rgba(52, 152, 219, 0.5), 0 0 20px rgba(52, 152, 219, 0.3)';
+                lessonCard.style.transform = 'translateY(-5px)';
+                
+                setTimeout(() => {
+                    lessonCard.style.boxShadow = '';
+                    lessonCard.style.transform = 'translateY(-10px)';
+                }, 1500);
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #2ecc71;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                font-weight: 600;
+                animation: slideIn 0.3s ease;
+                max-width: 300px;
+                transform-origin: top right;
+            `;
+            
+            // Add animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100px) scale(0.8); opacity: 0; }
+                    to { transform: translateX(0) scale(1); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0) scale(1); opacity: 1; }
+                    to { transform: translateX(100px) scale(0.8); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease forwards';
+                
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                    document.head.removeChild(style);
+                }, 300);
+            }, 3000);
+        }
+
+        // Load saved progress from localStorage
+        function loadSavedProgress() {
+            // Load completion progress
+            const savedProgress = localStorage.getItem('js-academy-lessons-progress');
+            if (savedProgress) {
+                const progress = JSON.parse(savedProgress);
+                lessonsData.forEach((lesson, index) => {
+                    if (progress[index]) {
+                        lesson.completed = progress[index].completed;
+                        lesson.progress = progress[index].progress;
+                    }
+                });
+                completedLessons = lessonsData.filter(l => l.completed).length;
+                updateCourseProgress();
+            }
+            
+            // Load saved/favorite lessons
+            const savedLessons = JSON.parse(localStorage.getItem('js-academy-saved-lessons') || '[]');
+            savedLessons.forEach(lessonId => {
+                const saveBtn = document.querySelector(`.save-lesson-btn[data-id="${lessonId}"]`);
+                if (saveBtn) {
+                    saveBtn.innerHTML = '<i class="fas fa-check"></i> Saved';
+                    saveBtn.style.background = '#2ecc71';
+                }
+            });
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            const progress = lessonsData.map(lesson => ({
+                completed: lesson.completed,
+                progress: lesson.progress
+            }));
+            localStorage.setItem('js-academy-lessons-progress', JSON.stringify(progress));
+        }
+
+        // Save progress when page is about to unload
+        window.addEventListener('beforeunload', saveProgress);
+        
+        // Auto-save progress every 30 seconds
+        setInterval(saveProgress, 30000);
+    </script>
+</body>
+</html>
